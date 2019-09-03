@@ -7,12 +7,18 @@ import VueRouter from 'vue-router'
 import router from './routes'
 import ErrorPage from './components/ErrorPage'
 import store from './store/index.js'
+//import VueThreejs from 'vue-threejs'
+
 
 
 Vue.config.productionTip = false;
 
 Vue.use(VueRouter)
 //Vue.use(Vuex)
+
+//Vue.use(VueThreejs)
+
+
 
 Vue.component('error-page', ErrorPage)
 
