@@ -1,5 +1,6 @@
 <template>
 	<div class="container-box">
+		<h1>Test 3D</h1>
 		<div id="background"></div>
 	</div>
 </template>
@@ -9,6 +10,7 @@
 import * as THREE from 'three'
 import * as OrbitControls from 'three-orbitcontrols'
 import store from '../store'
+import wall from '../assets/images/wall-1.jpeg'
 
 
 export default {
@@ -22,54 +24,77 @@ export default {
 		}
 	},
 	mounted() {
-		var scene = new THREE.Scene();//добавляємо сцену розміщення об'єкту
+		var scene = new THREE.Scene();//adde scene for object
 		var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-		var renderer = new THREE.WebGLRenderer();//взаємодія з WebGL API
-		renderer.setSize( window.innerWidth, window.innerHeight );//рендеринг розмірів, продукування елементу
-
-		var controls = new THREE.OrbitControls( camera, renderer.domElement );//підключаємо обертання елементу вручну
-		document.getElementById("background").appendChild(renderer.domElement);//вставляємо в DOM
+		var renderer = new THREE.WebGLRenderer();//interaction with WebGL API
+		renderer.setSize( window.innerWidth, window.innerHeight );//render dimension, production element
+		var controls = new THREE.OrbitControls( camera, renderer.domElement );//added orbit controls
+		document.getElementById("background").appendChild(renderer.domElement);//insert into DOM
 
 		controls.update();
 
 
 
-		//var geometry = new THREE.BoxGeometry( 1, 2, 1 );//визначення значень по осях x,y,z
-		var geometry = new THREE.SphereGeometry( 2, 26, 26 );//створюємо сферу
+		var geometry = new THREE.BoxGeometry( 1, 2, 1 );//definition valur for x,y,z
+		//var geometry = new THREE.SphereGeometry( 2, 26, 26 );//create sphere
 		var material = new THREE.MeshPhongMaterial( { 
 			color: '#433F81',
 			//wireframe: true,
 			// widthSegments: 10, 
 			// heightSegments: 10,
-			} );//вказуємо значення для сітки елементу, тобто його стилізація
+			} );//value for mesh element, styles
 
-		var cube = new THREE.Mesh( geometry, material );//поміщаємо значення координат та стилів в сітку, де буде знаходитися наш об'єкт
-		scene.add( cube );//передаємо виконаний елемент в сцену, для відображення
+		var cube = new THREE.Mesh( geometry, material );//we put the values of coordinates and styles in the mesh
+		scene.add( cube );//added element to scene
+
+
+
+
+		var cubeMaterials = [
+			new THREE.MeshLambertMaterial ( { map: new THREE.TextureLoader().load(wall), side: THREE.DoubleSide } ), //right side
+			new THREE.MeshPhongMaterial ( { map: new THREE.TextureLoader().load(wall), side: THREE.DoubleSide } ), //left side
+			new THREE.MeshPhongMaterial ( { map: new THREE.TextureLoader().load(wall), side: THREE.DoubleSide } ), //left side
+			new THREE.MeshPhongMaterial ( { map: new THREE.TextureLoader().load(wall), side: THREE.DoubleSide } ), //left side
+			new THREE.MeshPhongMaterial ( { map: new THREE.TextureLoader().load(wall), side: THREE.DoubleSide } ), //left side
+			new THREE.MeshPhongMaterial ( { map: new THREE.TextureLoader().load(wall), side: THREE.DoubleSide } ), //left side
+
+		]
+		//create a material, color or image texture
+		var material = new THREE.MeshFaceMaterial( cubeMaterials );
+		var cube = new THREE.Mesh( geometry, material );
+		scene.add ( cube );
+
+
+		camera.position.z = 3;
+
+
+
+
 
 
 
 		//added lights, start
-		var light = new THREE.SpotLight( '#ffffff', 1 );
-		light.position.set( 50, 50, 50 );
+		var light = new THREE.AmbientLight( '#ffffff', 1 );
+		//light.position.set( 50, 50, 50 );
 		scene.add( light );
 		//added lights, end
 
 
 
 
-		camera.position.z = 15;//віддаляє або приближає об'єкт, свого роду масштабування
-		camera.position.x = 0;//зміщення по осі х
-		camera.position.y = 0;//зміщення по осі y
+		camera.position.z = 15;//value for z, sacale object
+		camera.position.x = 0;//value for х
+		camera.position.y = 0;//value for y
 
 
 
 
-		//анімуємо об'єкт
+		//animation for oblect
 		var animate = function () {
 			requestAnimationFrame( animate );
 
-			cube.rotation.x += 0.01;
-			cube.rotation.y += 0.01;
+			//cube.rotation.x += 0.01;
+			//cube.rotation.y += 0.01;
 			//cube.rotation.z += 0.01;
 
 			renderer.render( scene, camera );
