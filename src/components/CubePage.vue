@@ -39,12 +39,13 @@ export default {
 		//var geometry = new THREE.SphereGeometry( 2, 26, 26 );//create sphere
 		var material = new THREE.MeshPhongMaterial( { 
 			color: '#433F81',
-			//wireframe: true,
+			wireframe: true,
 			// widthSegments: 10, 
 			// heightSegments: 10,
 			} );//value for mesh element, styles
 
 		var cube = new THREE.Mesh( geometry, material );//we put the values of coordinates and styles in the mesh
+		cube.position.x = 2;
 		scene.add( cube );//added element to scene
 
 
@@ -61,11 +62,11 @@ export default {
 		]
 		//create a material, color or image texture
 		var material = new THREE.MeshFaceMaterial( cubeMaterials );
-		var cube = new THREE.Mesh( geometry, material );
-		scene.add ( cube );
+		var cube1 = new THREE.Mesh( geometry, material );
+		scene.add ( cube1 );
 
 
-		camera.position.z = 3;
+		//camera.position.z = 3;
 
 
 
@@ -82,7 +83,7 @@ export default {
 
 
 
-		camera.position.z = 15;//value for z, sacale object
+		camera.position.z = 5;//value for z, sacale object
 		camera.position.x = 0;//value for х
 		camera.position.y = 0;//value for y
 
@@ -93,9 +94,9 @@ export default {
 		var animate = function () {
 			requestAnimationFrame( animate );
 
-			//cube.rotation.x += 0.01;
-			//cube.rotation.y += 0.01;
-			//cube.rotation.z += 0.01;
+			cube.rotation.x += 0.01;
+			cube.rotation.y += 0.01;
+			cube.rotation.z += 0.01;
 
 			renderer.render( scene, camera );
 		};
