@@ -28,19 +28,17 @@ export default {
 		renderer.setSize( window.innerWidth, window.innerHeight );//рендеринг розмірів, продукування елементу
 
 		var controls = new THREE.OrbitControls( camera, renderer.domElement );//підключаємо обертання елементу вручну
-
 		document.getElementById("background").appendChild(renderer.domElement);//вставляємо в DOM
 
-		//camera.position.set( 1, 1, 1 ); ???
 		controls.update();
 
 
 
 		//var geometry = new THREE.BoxGeometry( 1, 2, 1 );//визначення значень по осях x,y,z
-		var geometry = new THREE.SphereGeometry( 2, 20, 20 );//створюємо сферу
-		var material = new THREE.MeshBasicMaterial( { 
+		var geometry = new THREE.SphereGeometry( 2, 26, 26 );//створюємо сферу
+		var material = new THREE.MeshPhongMaterial( { 
 			color: '#433F81',
-			wireframe: true,
+			//wireframe: true,
 			// widthSegments: 10, 
 			// heightSegments: 10,
 			} );//вказуємо значення для сітки елементу, тобто його стилізація
@@ -49,7 +47,17 @@ export default {
 		scene.add( cube );//передаємо виконаний елемент в сцену, для відображення
 
 
-		camera.position.z = 10;//віддаляє або приближає об'єкт, свого роду масштабування
+
+		//added lights, start
+		var light = new THREE.SpotLight( '#ffffff', 1 );
+		light.position.set( 50, 50, 50 );
+		scene.add( light );
+		//added lights, end
+
+
+
+
+		camera.position.z = 15;//віддаляє або приближає об'єкт, свого роду масштабування
 		camera.position.x = 0;//зміщення по осі х
 		camera.position.y = 0;//зміщення по осі y
 
